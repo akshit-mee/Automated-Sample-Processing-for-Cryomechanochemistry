@@ -10,8 +10,9 @@ Affiliation: DWI - Leibniz Institute for Interactive Materials
 Last Modified: 2025-07-08
 Version: 1.0
 
-License:
+License: MIT License
 
+Notes:
 '''
 
 

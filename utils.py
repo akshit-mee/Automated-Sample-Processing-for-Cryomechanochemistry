@@ -10,7 +10,7 @@ Affiliation: DWI - Leibniz Institute for Interactive Materials
 Last Modified: 2025-07-08
 Version: 1.0
 
-License:
+License: MIT License
 
 Notes: 
 Need to setup temperature senser as 1wire with the cobot, before using the read_temp function.

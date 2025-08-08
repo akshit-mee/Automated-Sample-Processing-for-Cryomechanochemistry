@@ -10,7 +10,7 @@ Affiliation: DWI - Leibniz Institute for Interactive Materials
 Last Modified: 2025-07-08
 Version: 1.0
 
-License:
+License: MIT License
 
 Notes:
 Add coordinates for your experiment setup for thermomixer, liquid nitrogen and home position (RobotActions.__init__).
@@ -28,15 +28,15 @@ import utils
 ######################## User Settings ##########################
 # These settings are used to control the robot's actions and can be modified by the user. handelled by thebackend in the lab
 
-Experiment_Name = "Experimetn Name"
+Experiment_Name = "Experiment Name"
 Person_Responsible = "Person Responsible"
-Thermomixer_Time = 180  # in seconds
-Liquid_Nitrogen_Time = 60  # in seconds
-Waiting_Time = 5  # in seconds (minimum 2 seconds)
-Number_of_Cycles = 1  # Number of cycles to run the experiment
-Run_Number = 1  # Run number of the experiment
+Thermomixer_Time = 180                      # in seconds
+Liquid_Nitrogen_Time = 60                   # in seconds
+Waiting_Time = 5                            # in seconds (minimum 2 seconds)
+Number_of_Cycles = 1                        # Number of cycles to run the experiment
+Run_Number = 1                              # Run number of the experiment
 
-Robot_Speed = 100  # from 1 to 100, where 100 is the maximum speed
+Robot_Speed = 100                           # from 1 to 100, where 100 is the maximum speed
 
 ###################################################################
 
@@ -112,19 +112,6 @@ class RobotActions:
         self.cm = [0,0,0,0,0,0]                 # Coorninates for inbetween point close to robotics arm to prevent collisions when moving
         self.cr = [0,0,0,0,0,0]                 # Coorninates for Home Position (Resting on Base)
 
-    # update experimet parameters from backend    
-    # def update_settings(self, settings):
-    #     global setting_flag
-    #     if setting_flag:
-    #         self.thermomixer_time = settings['thermomixer_time_s']
-    #         self.liquid_nitrogen_time = settings['liquid_nitrogen_time_s']
-    #         self.waiting_time = settings['waiting_time_s']
-    #         self.number_of_cycles = settings['number_of_cycles']
-    #         log.info('Updated settings')
-    #         log.info(f"Thermomixer time: {self.thermomixer_time}")
-    #         log.info(f"Liquid Nitrogen time: {self.liquid_nitrogen_time}")
-    #         log.info(f"Waiting time: {self.waiting_time}")
-    #         log.info(f"Number of cycles: {self.number_of_cycles}")
 
     ################################ Basic Coordinate Distance ##########################
     def distance(self, point1, point2):
@@ -191,7 +178,7 @@ class RobotActions:
     def delay(self, delay, interval = 0.2):
         start_time = time.monotonic()
         while (time.monotonic() - start_time) < delay:
-            self._check_staus()
+            # self._check_staus()
             time.sleep(interval)
             
     def init_experiment(self):
@@ -276,7 +263,7 @@ class RobotActions:
             # update_robot_log("Moving inside LN2", self.current_cycle, gripper_state, mc.get_error_information())
             log.info("Moving inside LN2")
             start_ln2_time = time.monotonic()
-            self.move(self.c1, 30)              #Lower Speed to prevent splashing
+            self.move(self.c1, 30)                                              #Lower Speed to prevent splashing
             self.delay(self.liquid_nitrogen_time - 2)
             end_ln2_time = time.monotonic()
             ln2_time = {start_ln2_time - end_ln2_time}
@@ -319,19 +306,12 @@ if __name__ == "__main__":
     settings_old = None
     
     while True:
-        # controll = get_robot_control()
+        
         controll = {"running": True}
         
-        # settings = get_experiment_settings()
-        setting = user_settings
+        setting = user_settings   
         
-        # if settings_old != settings:
-        #     settings_old = settings
-        #     settings = get_experiment_settings()
-        #     ra.update_settings(settings)
-        #     ra.current_cycle = 1       
-        
-        while controll['running'] and setting_flag:
+        while controll['running']:
             ra.init_experiment()
             try:
                 ra.run_cycle()
